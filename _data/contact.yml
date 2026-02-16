@@ -1,40 +1,29 @@
 #  The contact options.
 
 - type: github
-  icon: "fab fa-github"
+  icon: fab fa-github
+  url: https://github.com/Stuocs
+
+- type: linkedin
+  icon: fab fa-linkedin
+  url: https://linkedin.com/in/alfredoespin
+
+- type: cube
+  icon: fas fa-cube
+  url: https://app.hackthebox.com/profile/1632
+
+- type: graduation-cap
+  icon: fas fa-graduation-cap
+  url: https://tryhackme.com/p/Alesber
+
+- type: flask
+  icon: fas fa-flask
+  url: https://labs.thehackerslabs.com/hacker/1632
 
 - type: twitter
-  icon: "fa-brands fa-x-twitter"
+  icon: fab fa-twitter
+  url: https://twitter.com/tu-usuario
 
-- type: email
-  icon: "fas fa-envelope"
-  noblank: true # open link in current tab
-
-- type: rss
-  icon: "fas fa-rss"
-  noblank: true
-# Uncomment and complete the url below to enable more contact options
-#
-# - type: mastodon
-#   icon: 'fab fa-mastodon'   # icons powered by <https://fontawesome.com/>
-#   url:  ''                  # Fill with your Mastodon account page, rel="me" will be applied for verification
-#
-# - type: linkedin
-#   icon: 'fab fa-linkedin'   # icons powered by <https://fontawesome.com/>
-#   url:  ''                  # Fill with your Linkedin homepage
-#
-# - type: stack-overflow
-#   icon: 'fab fa-stack-overflow'
-#   url:  ''                  # Fill with your stackoverflow homepage
-#
-# - type: bluesky
-#   icon: 'fa-brands fa-bluesky'
-#   url: ''                   # Fill with your Bluesky profile link
-#
-# - type: reddit
-#   icon: 'fa-brands fa-reddit'
-#   url: ''                   # Fill with your Reddit profile link
-#
-# - type: threads
-#   icon: 'fa-brands fa-threads'
-#   url: ''                   # Fill with your Threads profile link
+- type: envelope
+  icon: fas fa-envelope
+  url: mailto:alfredo.espinber@gmail.com

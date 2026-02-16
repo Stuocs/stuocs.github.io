@@ -3,46 +3,40 @@
 # Import the theme
 theme: jekyll-theme-chirpy
 
-# The language of the webpage › http://www.lingoes.net/en/translator/langcode.htm
-# If it has the same name as one of the files in folder `_data/locales`, the layout language will also be changed,
-# otherwise, the layout language will use the default value of 'en'.
-lang: en
+title: Kairos Security
+tagline: Journey to OSCP | Pentesting & CTFs
+description: >-
+  Cybersecurity portfolio and personal wiki. Documenting my journey towards the OSCP certification, 
+  sharing HTB, THM and THL writeups, and exploring offensive security techniques.
 
-# Change to your timezone › https://zones.arilyn.cc
-timezone:
-
-# jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
-# ↓ --------------------------
-
-title: Chirpy # the main title
-
-tagline: A text-focused Jekyll theme # it will display as the subtitle
-
-description: >- # used by seo meta and the atom feed
-  A minimal, responsive and feature-rich Jekyll theme for technical writing.
+author: Kairos_0x
+language: en                
+timezone: Europe/Madrid     
 
 # Fill in the protocol & hostname for your site.
-# E.g. 'https://username.github.io', note that it does not end with a '/'.
-url: ""
+# E.g. '    - https://username.github.io', note that it does not end with a '/'.
+url: "https://Stuocs.github.io"
 
 github:
-  username: github_username # change to your GitHub username
+  username: Stuocs # change to your GitHub username
 
 twitter:
   username: twitter_username # change to your Twitter username
 
 social:
-  # Change to your full name.
-  # It will be displayed as the default author of the posts and the copyright owner in the Footer
-  name: your_full_name
-  email: example@domain.com # change to your email address
+  name: Alfredo Espín Bernal
+  email: alfredo.espinber@gmail.com
   links:
-    # The first element serves as the copyright owner's link
-    - https://twitter.com/username # change to your Twitter homepage
-    - https://github.com/username # change to your GitHub homepage
+    - https://github.com/Stuocs
+    - https://linkedin.com/in/alfredoespin
+    - https://app.hackthebox.com/profile/1632
+    - https://tryhackme.com/p/Alesber
+    - https://labs.thehackerslabs.com/hacker/1632
+    - https://twitter.com/tu-usuario
+    # change to your GitHub homepage
     # Uncomment below to add more social links
-    # - https://www.facebook.com/username
-    # - https://www.linkedin.com/in/username
+    # -     - https://www.facebook.com/username
+    # -     - https://www.linkedin.com/in/username
 
 # Site Verification Settings
 webmaster_verifications:
@@ -94,11 +88,11 @@ theme_mode: # [light | dark]
 # Notice that once it is assigned, the CDN url
 # will be added to all media resources (site avatar, posts' images, audio and video files) paths starting with '/'
 #
-# e.g. 'https://cdn.com'
+# e.g. '    - https://cdn.com'
 cdn:
 
 # the avatar on sidebar, support local or CORS resources
-avatar:
+avatar: /assets/img/kairos.png
 
 # The URL of the site-wide social preview image used in SEO `og:image` meta tag.
 # It can be overridden by a customized `page.image` in front matter.
@@ -112,12 +106,12 @@ comments:
   provider: # [disqus | utterances | giscus]
   # The provider options are as follows:
   disqus:
-    shortname: # fill with the Disqus shortname. › https://help.disqus.com/en/articles/1717111-what-s-a-shortname
-  # utterances settings › https://utteranc.es/
+    shortname: # fill with the Disqus shortname. ›    - https://help.disqus.com/en/articles/1717111-what-s-a-shortname
+  # utterances settings ›     - https://utteranc.es/
   utterances:
     repo: # <gh-username>/<repo>
     issue_term: # < url | pathname | title | ...>
-  # Giscus options › https://giscus.app
+  # Giscus options ›    - https://giscus.app
   giscus:
     repo: # <gh-username>/<repo>
     repo_id:
@@ -129,7 +123,7 @@ comments:
     lang: # optional, default to the value of `site.lang`
     reactions_enabled: # optional, default to the value of `1`
 
-# Self-hosted static assets, optional › https://github.com/cotes2020/chirpy-static-assets
+# Self-hosted static assets, optional ›     - https://github.com/cotes2020/chirpy-static-assets
 assets:
   self_host:
     enabled: # boolean, keep empty means false
@@ -157,7 +151,7 @@ baseurl: ""
 kramdown:
   footnote_backlink: "&#8617;&#xfe0e;"
   syntax_highlighter: rouge
-  syntax_highlighter_opts: # Rouge Options › https://github.com/jneen/rouge#full-options
+  syntax_highlighter_opts: # Rouge Options ›    - https://github.com/jneen/rouge#full-options
     css_class: highlight
     # default_lang: console
     span:
