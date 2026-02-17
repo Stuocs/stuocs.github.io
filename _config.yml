@@ -12,10 +12,11 @@ description: >-
 author: Kairos_0x
 language: en                
 timezone: Europe/Madrid     
+future: false
 
 # Fill in the protocol & hostname for your site.
 # E.g. '    - https://username.github.io', note that it does not end with a '/'.
-url: "https://Stuocs.github.io"
+url: "https://stuocs.github.io"
 
 github:
   username: Stuocs # change to your GitHub username
