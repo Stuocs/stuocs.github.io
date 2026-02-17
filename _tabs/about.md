@@ -54,7 +54,6 @@ I actively sharpen my skills on competitive platforms under different handles. C
 
 * **Hack The Box**: [Stuocs](https://profile.hackthebox.com/profile/019c6ac0-02f4-7364-8bb8-d27fcfe855ec)
 * **TryHackMe**: [Alesber](https://tryhackme.com/p/Stuocs)
-* **The Hackers Labs**: Kairos_0x
 
 ---
 
