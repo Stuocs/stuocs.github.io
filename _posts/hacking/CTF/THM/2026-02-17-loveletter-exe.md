@@ -4,7 +4,7 @@ date: 2026-02-17 00:00:00 +0100
 categories: [CTF, TryHackMe]
 tags: [forensics, malware-analysis, reverse-engineering, powershell, vbscript, ransomware]
 image:
-  path: ../../../../assets/img/Pasted%20image%2020260216193729.png
+  path: ../../../../assets/img/Love%20at%20%the%first%breach.png
   alt: Challenge Banner
 author: kairos
 ---
