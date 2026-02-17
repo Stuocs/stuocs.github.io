@@ -16,9 +16,9 @@
   icon: fas fa-graduation-cap
   url: https://tryhackme.com/p/Stuocs
 
-- type: flask
-  icon: fas fa-flask
-  url: https://labs.thehackerslabs.com/hacker/1632
+#- type: flask
+#  icon: fas fa-flask
+#  url: https://labs.thehackerslabs.com/hacker/1632
 
 - type: twitter
   icon: fab fa-twitter
