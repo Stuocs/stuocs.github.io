@@ -1,5 +1,5 @@
 ---
-title: Love at First Breach 2026 | TryHackMe | Task 1: LOVELETTER.exe
+title: Love at First Breach 2026 - TryHackMe - Task 1: LOVELETTER.exe
 date: 2026-02-17 00:00:00 +0100
 categories: [CTF, TryHackMe]
 tags: [forensics, malware-analysis, reverse-engineering, powershell, vbscript, ransomware]
