@@ -5,16 +5,17 @@ icon: fas fa-user-shield
 order: 4
 ---
 
-# Hello, I'm Kairos.
+---
 
-I am a **System Administrator** based in Spain, currently pivoting into **Offensive Security**.
+# Welcome to Kairos_0x.
 
-My background is deeply rooted in infrastructure. I currently manage an enterprise Active Directory environment, including Domain Controllers, Fortinet firewalls, and MikroTik networking infrastructure. This hands-on experience with defense mechanisms gives me a strategic advantage: **I understand how networks are built and secured, allowing me to identify architectural weaknesses that others might overlook.**
+I am **Stuocs** (Alfredo), a **System Administrator** based in Spain currently pivoting into **Offensive Security**.
+
+**Kairos_0x** is my personal documentation project—a collection of CTF writeups, malware analysis research, and security methodologies.
+
+My background is deeply rooted in infrastructure. I currently manage an enterprise Active Directory environment, including Domain Controllers, Fortinet firewalls, and MikroTik networking infrastructure. This hands-on experience allows me to identify architectural weaknesses that others might overlook.
 
 My goal is to transition into a full-time role as a **Pentester** or **Cybersecurity Engineer**. I am currently preparing for my **OSCP** certification.
-
-On this blog, I document my CTF writeups, technical research on malware analysis, and automation tools designed to simplify complex workflows.
-
 ---
 
 ### Technical Focus
