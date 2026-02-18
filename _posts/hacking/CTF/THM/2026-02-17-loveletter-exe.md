@@ -320,7 +320,7 @@ $c3 = [byte[]](0x52,0x4F,0x53,0x45,0x53) # Key: ROSES
 ```
 
 It’s a matter of translating bytes into human-readable language.
-
+![bytes_to_human](../../../../assets/img/Screenshot_4.png)
 
 **Logic:**
 1.  Download the JPG.
