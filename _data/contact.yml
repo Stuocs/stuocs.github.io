@@ -16,10 +16,6 @@
   icon: fas fa-graduation-cap
   url: https://tryhackme.com/p/Stuocs
 
-- type: twitter
-  icon: fab fa-twitter
-  url: https://twitter.com/
-
 - type: envelope
   icon: fas fa-envelope
   url: mailto:alfredo.espinber@gmail.com
