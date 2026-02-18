@@ -319,7 +319,8 @@ $c3 = [byte[]](0x52,0x4F,0x53,0x45,0x53) # Key: ROSES
 # ...
 ```
 
-![Code Review](../../../../assets/img/Pasted%20image%2020260216225023.png)
+It’s a matter of translating bytes into human-readable language.
+
 
 **Logic:**
 1.  Download the JPG.
