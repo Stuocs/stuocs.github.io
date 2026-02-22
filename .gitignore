@@ -1,27 +1,32 @@
 # Bundler cache
-.bundle
-vendor
+.bundle/
+vendor/
 Gemfile.lock
 
-# Jekyll cache
-.jekyll-cache
+# Jekyll cache & build
+.jekyll-cache/
 .jekyll-metadata
-_site
+# Esto ignora CUALQUIER carpeta _site, esté donde esté
+**/_site/
 
 # RubyGems
 *.gem
 
 # NPM dependencies
-node_modules
+node_modules/
 package-lock.json
 
 # IDE configurations
-.idea
+.idea/
 .vscode/*
 !.vscode/settings.json
 !.vscode/extensions.json
 !.vscode/tasks.json
 
+# Windows Metadata (IMPORTANTE para tu entorno)
+*:Zone.Identifier
+.DS_Store
+
 # Misc
-_sass/vendors
-assets/js/dist
+_sass/vendors/
+assets/js/dist/
